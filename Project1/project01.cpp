@@ -11,14 +11,37 @@ extern const int MAXCOLS;                 // Maximum number of columns in image
 
 void LoadImage(string imagefile, int image[MAXROWS][MAXCOLS])
 {
+    for (int i = 0; i < MAXROWS; i++)
+    {
+        for (int j = 0; j < MAXCOLS; j++)
+        {
+            image[i][j] = 0;
+        }
+    }
+
+    std::cout << "File name: " << imagefile << std::endl;
+
     ifstream inputs;
     inputs.open(imagefile.c_str());
+
+    if (!inputs.is_open())
+    {
+        std::cout << "Unable to open file" << std::endl;
+        return;
+    }
 
     for (int i = 0; i < MAXROWS; i++)
     {
         for (int j = 0; j < MAXCOLS; j++)
         {
+            if (inputs.eof() || inputs.fail())
+            {
+                std::cout << "Reached end of file" << std::endl;
+                return;
+            }
+
             inputs >> image[i][j];
+            std::cout << i << " " << j << " " << image[i][j] << std::endl;  // josh debug
         }
     }
     inputs.close();
