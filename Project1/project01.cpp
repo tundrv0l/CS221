@@ -1,4 +1,7 @@
-/* project01.cpp */
+/* project01.cpp 
+   | CS221 - 8/19/23
+   | Project 1 - Parker Clark
+*/
 
 #include <iostream>
 #include <fstream>
@@ -115,6 +118,7 @@ void FlipVertical(int image[MAXROWS][MAXCOLS])
     }
 
 }
+
 void RotateCW(int image[MAXROWS][MAXCOLS])
 {
     /*
