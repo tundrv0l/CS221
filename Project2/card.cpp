@@ -12,56 +12,60 @@
 Card::Card()
 // Default Constructor: Initializes value to 0, color to "unknown", and suit to 'U'
 {
-  /* Add your code here */
+  value = 0; // Set every value to its initialization value
+  color = "unknown";
+  suit = 'U';
 } 
 
 
 Card::Card(int v)
 // Parameterized Constructor: Initializes value to v, color to "unknown", and suit to 'U'
 {
-  /* Add your code here */
+  value = v; // Set every value to its initialization value, where v is passed in as a parameter
+  color = "unknown";
+  suit = 'U';
 }  
 
 
 int Card::GetValue() const
 // Returns variable value
 {
-  /* Add your code here */
+  return value;
 }
 
 
 string Card::GetColor() const
 // Returns variable color
 {
-  /* Add your code here */
+  return color;
 }
 
 
 char Card::GetSuit() const
 // Returns variable suit
 {
-  /* Add your code here */
+  return suit;
 }
 
 
 void Card::SetValue(int v)
 // Sets value to v
 {
-  /* Add your code here */
+  value = v;
 }
 
 
 void Card::SetColor(string c)
 // Sets color to c
 {
-  /* Add your code here */
+  color = c;
 }
 
 
 void Card::SetSuit(char s)
 // Sets suit to s
 {
-  /* Add your code here */
+  suit = s;
 }
 
 

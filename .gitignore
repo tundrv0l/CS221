@@ -5,6 +5,7 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 !.vscode/*.code-snippets
+*/.vscode
 
 # Local History for Visual Studio Code
 .history/
@@ -14,3 +15,9 @@
 
 #Ignore any .exe files
 *.exe
+
+#Ignore any .dll files
+*.dll
+
+#Ignore any .o files
+*.o
