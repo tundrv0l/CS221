@@ -5,10 +5,8 @@
 
 BlackCard::BlackCard(int v) : Card(v)
 // Parameterized Constructor: Initializes value to 0, color to "Black", and suit to 'U'
-{
-  SetValue(v);
-  SetColor("Black");
-  SetSuit('U');
+{ 
+  SetColor("Black"); // SetColor to "Black", where the intended value and suit variables are inherited from Card
 }
 
 string BlackCard::Description() const

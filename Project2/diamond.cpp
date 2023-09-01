@@ -6,9 +6,7 @@
 Diamond::Diamond(int v) : RedCard(v)
 // Parameterized Constructor: Initializes value to the passed in arguement, color to "Red", and suit to 'D'
 {
-  SetValue(v);
-  SetColor("Red");
-  SetSuit('D');
+  SetSuit('D'); // SetSuit to "D", where the intended value and color variables are inherited from Card and RedCard
 }
 
 string Diamond::Description() const

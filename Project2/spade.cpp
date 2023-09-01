@@ -6,9 +6,7 @@
 Spade::Spade(int v) : BlackCard(v)
 // Parameterized Constructor: Initializes value to the passed in arguement, color to "Black", and suit to 'S'
 {
-  SetValue(v);
-  SetColor("Black");
-  SetSuit('S');
+  SetSuit('S'); // SetSuit to "S", where the intended value and color variables are inherited from Card and BlackCard
 }
 
 string Spade::Description() const

@@ -6,9 +6,7 @@
 RedCard::RedCard(int v) : Card(v)
 // Parameterized Constructor: Initializes value to 0, color to "Red", and suit to 'U'
 {
-  SetValue(v);
-  SetColor("Red");
-  SetSuit('U');
+  SetColor("Red"); // SetColor to "Red", where the intended value and suit variables are inherited from Card
 }
 
 string RedCard::Description() const

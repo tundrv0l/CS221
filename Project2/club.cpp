@@ -6,9 +6,7 @@
 Club::Club(int v) : BlackCard(v)
 // Parameterized Constructor: Initializes value to the passed in arguement, color to "Black", and suit to 'C'
 {
-  SetValue(v);
-  SetColor("Black");
-  SetSuit('S');
+  SetSuit('C'); // SetSuit to "C", where the intended value and color variables are inherited from Card and BlackCard
 }
 
 string Club::Description() const
