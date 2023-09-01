@@ -85,17 +85,17 @@ string Card::Description() const
     case 6:   d = d + "6";    break;
     case 7:   d = d + "7";    break;
     case 8:   d = d + "8";    break;
-	case 9:   d = d + "9";    break;
+	  case 9:   d = d + "9";    break;
     case 10:  d = d + "10";   break;
-	
+
     case 11:  d = d + "J";    break;      // Face cards
     case 12:  d = d + "Q";    break;
-	case 13:  d = d + "K";    break;
-	case 14:  d = d + "A";    break;
+	  case 13:  d = d + "K";    break;
+	  case 14:  d = d + "A";    break;
 
-	default:  d = d + "?";    break;      // Unknown card
+	  default:  d = d + "?";    break;      // Unknown card
   }
-
+  
   return d;                 // Return string describing card value
 }
 
