@@ -35,14 +35,26 @@ public:
     void setCharisma(int chr); // Sets m_iCharTraits[5] to parameter 'chr'
 
 
-
-
     // ** Character Observers ** //
+    void getName(char *name); // Copies m_sName to parameter 'name'
+    void getClass(int &cl); // Copies m_iClass to parameter 'cl'
+    void getAlignment(int &al); // Copies m_iAlignment to parameter 'al'
+    void getHitPoints(int &hp); // Copies m_iHitPoints to parameter 'hp'
+    void getStrength(int *str); // Copies m_iCharTraits[0] to parameter 'str'
+    void getDexterity(int *dex); // Copies m_iCharTraits[1] to parameter 'dex'
+    void getConstitution(int *con); // Copies m_iCharTraits[2] to parameter 'con'
+    void getIntelligence(int *itl); // Copies m_iCharTraits[3] to parameter 'itl'
+    void getWisdom(int *wis); // Copies m_iCharTraits[4] to parameter 'wis'
+    void getCharisma(int *chr); // Copies m_iCharTraits[5] to parameter 'chr' 
 
     // ** Character Destructor ** //
     ~Character(); // Destructor
 
-} 
+    // ** Character Functions ** //
+    void printAll(); // Prints all character data members to console
+
+
+};
 
 
 
