@@ -32,3 +32,31 @@ Character::Character(char *name, int cl, int al, int hp, int str, int dex, int c
     m_iAlignment = al;
     m_iHitPoints = hp;
 }
+
+// ** Character Transformers ** //
+
+void Character::setName(char *name)
+/*
+A function that takes a name parameter, and sets it to a character array.
+
+    Parameters
+    ----------
+    *name: CHAR ARRAY
+        A pointer to a character array to set our member array to.
+*/
+{
+    strcpy_s(m_sName, name); // Might remove, not sure how he wants this done
+}
+
+void Character::setClass(int cl)
+/*
+A function that takes a class parameter, and sets it to a character class.
+
+    Parameters
+    ----------
+    cl: INT
+        An integer representing a 'class' archetype.
+*/
+{
+    m_iClass = cl;
+}
