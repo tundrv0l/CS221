@@ -19,7 +19,7 @@ public:
     // ** Character Constructors ** //
     Character(); // Default constructor
 
-    Character(char *name, int cl, int al, int hp, int str, int dex, int con, int itl, int wis, int chr); // Parameterized constructor
+    Character(char *name, int cl, int al, int hp, int str, int dex, int cn, int itl, int wis, int chr); // Parameterized constructor
 
     // ** Character Transformers ** //
 

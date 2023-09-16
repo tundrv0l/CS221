@@ -23,8 +23,7 @@ Character::Character()
 }
 
 //Might change this array population as well
-Character::Character(char *name, int cl, int al, int hp, int str, int dex, int cn, int itl, int wis, int chr) 
-: m_iCharTraits{ str, dex, cn, itl, wis, chr }
+Character::Character(char *name, int cl, int al, int hp, int str, int dex, int cn, int itl, int wis, int chr) : m_iCharTraits{ str, dex, cn, itl, wis, chr }
 // Parameterized Constructor - Sets every private member for 'Character' to their parameterized value //
 {
     strcpy_s(m_sName, name); 
@@ -193,8 +192,6 @@ A function that takes a class parameter, and copies it to a character class.
     cl = m_iClass;
 }
 
-
-// Idk if this is right tbh
 void Character::getAlignment(int &al)
 /*
 A function that takes an alignment parameter, and copies it to a character alignment.
@@ -206,4 +203,121 @@ A function that takes an alignment parameter, and copies it to a character align
 */
 {
     al = m_iAlignment;
+}
+
+void Character::getHitPoints(int &hp)
+/*
+A function that takes a hit point parameter, and copies it to a character hit point value.
+
+    Parameters
+    ----------
+    hp: INT
+        An integer representing a hit point value.
+*/
+{
+    hp = m_iHitPoints;
+}
+
+void Character::getStrength(int *str)
+/*
+A function that takes a strength parameter, and copies it to the strength value index.
+
+    Parameters
+    ----------
+    str: INT
+        An integer representing a strength value.
+*/
+{
+    *str = m_iCharTraits[0];
+}
+
+void Character::getDexterity(int *dex)
+/*
+A function that takes a dexterity parameter, and copies it to the dexterity value index.
+
+    Parameters
+    ----------
+    dex: INT
+        An integer representing a dexterity value.
+*/
+{
+    *dex = m_iCharTraits[1];
+}
+
+void Character::getConstitution(int *cn)
+/*
+A function that takes a constitution parameter, and copies it to the constitution value index.
+
+    Parameters
+    ----------
+    cn: INT
+        An integer representing a constitution value.
+*/
+{
+    *cn = m_iCharTraits[2];
+}
+
+void Character::getIntelligence(int *itl)
+/*
+A function that takes an intelligence parameter, and copies it to the intelligence value index.
+
+    Parameters
+    ----------
+    itl: INT
+        An integer representing an intelligence value.
+*/
+{
+    *itl = m_iCharTraits[3];
+}
+
+void Character::getWisdom(int *wis)
+/*
+A function that takes a wisdom parameter, and copies it to the wisdom value index.
+
+    Parameters
+    ----------
+    wis: INT
+        An integer representing a wisdom value.
+*/
+{
+    *wis = m_iCharTraits[4];
+}
+
+void Character::getCharisma(int *chr)
+/*
+A function that takes a charisma parameter, and copies it to the charisma value index.
+
+    Parameters
+    ----------
+    chr: INT
+        An integer representing a charisma value.
+*/
+{
+    *chr = m_iCharTraits[5];
+}
+
+// ** Character Destructor ** //
+
+Character::~Character()
+// Destructor - Does nothing //
+{
+}
+
+// ** Character Functions ** //
+
+void Character::printAll()
+/*
+A function that prints all character data members to console.
+*/
+{
+    cout << "Name: " << m_sName << endl;
+    cout << "Class: " << m_iClass << endl;
+    cout << "Alignment: " << m_iAlignment << endl;
+    cout << "Hit Points: " << m_iHitPoints << endl;
+    cout << "Strength: " << m_iCharTraits[0] << endl;
+    cout << "Dexterity: " << m_iCharTraits[1] << endl;
+    cout << "Constitution: " << m_iCharTraits[2] << endl;
+    cout << "Intelligence: " << m_iCharTraits[3] << endl;
+    cout << "Wisdom: " << m_iCharTraits[4] << endl;
+    cout << "Charisma: " << m_iCharTraits[5] << endl;
 }
