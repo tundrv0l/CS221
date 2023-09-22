@@ -4,18 +4,25 @@
 #define CHARACTER_H
 
 #include <string>
+#include "Item.h"
 
 class Character
 {
 private:
-    // ** Character Data Members ** //
+    // ** Private Data Members ** //
     char m_sName[65]; // Character name (up to 64 characters, +1 to account for null terminator)
     int m_iClass; // Character class
     int m_iAlignment; // Character alignment
     int m_iHitPoints; // Character hit points
     int m_iCharTraits[6]; // Character traits (By index: STR[0], DEX[1], CON[2], INT[3], WIS[4], CHA[5])
+    Item m_Items[10]; // Character inventory (up to 10 items)
+
 
 public:
+
+    // ** Public Data Members ** //
+    Character *m_pNext; // Pointer to the next character in the list
+
     // ** Character Constructors ** //
     Character(); // Default constructor
 
@@ -33,25 +40,29 @@ public:
     void setIntelligence(int itl); // Sets m_iCharTraits[3] to parameter 'itl'
     void setWisdom(int wis); // Sets m_iCharTraits[4] to parameter 'wis'
     void setCharisma(int chr); // Sets m_iCharTraits[5] to parameter 'chr'
+    bool addItem(Item *item); // Adds an item to the character's inventory
+    Item *dropItem(char *itemName); // Removes an item from the character's inventory
+
 
 
     // ** Character Observers ** //
-    void getName(char *name); // Copies m_sName to parameter 'name'
-    void getClass(int &cl); // Copies m_iClass to parameter 'cl'
-    void getAlignment(int &al); // Copies m_iAlignment to parameter 'al'
-    void getHitPoints(int &hp); // Copies m_iHitPoints to parameter 'hp'
-    void getStrength(int *str); // Copies m_iCharTraits[0] to parameter 'str'
-    void getDexterity(int *dex); // Copies m_iCharTraits[1] to parameter 'dex'
-    void getConstitution(int *con); // Copies m_iCharTraits[2] to parameter 'con'
-    void getIntelligence(int *itl); // Copies m_iCharTraits[3] to parameter 'itl'
-    void getWisdom(int *wis); // Copies m_iCharTraits[4] to parameter 'wis'
-    void getCharisma(int *chr); // Copies m_iCharTraits[5] to parameter 'chr' 
+    char *getName(); // Gets the m_sName array
+    int getClass(); // Gets the m_iClass integer
+    int getAlignment(); // Gets the m_iAlignment integer
+    int getHitPoints(); // Gets the m_iHitPoints integer
+    int getStrength(); // Gets the m_iCharTraits[0] integer
+    int getDexterity(); // Gets the m_iCharTraits[1] integer
+    int getConstitution(); // Gets the m_iCharTraits[2] integer
+    int getIntelligence(); // Gets the m_iCharTraits[3] integer
+    int getWisdom(); // Gets the m_iCharTraits[4] integer
+    int getCharisma(); // Gets the m_iCharTraits[5] integer
+    Item *getItem(char *itemName); // Returns an item from the character's inventory
 
     // ** Character Destructor ** //
     ~Character(); // Destructor
 
     // ** Character Functions ** //
-    void printAll(); // Prints all character data members to console
+    void printAll(); // Prints all character data members to console, includes the items they are holding
 
 
 };

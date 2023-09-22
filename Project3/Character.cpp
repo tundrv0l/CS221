@@ -22,7 +22,6 @@ Character::Character()
     }
 }
 
-//Might change this array population as well
 Character::Character(char *name, int cl, int al, int hp, int str, int dex, int cn, int itl, int wis, int chr) : m_iCharTraits{ str, dex, cn, itl, wis, chr }
 // Parameterized Constructor - Sets every private member for 'Character' to their parameterized value //
 {
@@ -164,136 +163,214 @@ A function that takes a charisma parameter, and sets it to the charisma value in
     m_iCharTraits[5] = chr;
 }
 
+bool Character::addItem(Item *item)
+/*
+A function that takes an item parameter, and adds it to the character's inventory.
+
+    Parameters
+    ----------
+    *item: ITEM
+        A pointer to an item to add to the character's inventory.
+
+    Returns
+    -------
+    BOOL
+        A boolean value representing whether or not the item was added to the inventory. TRUE if added, FALSE if not.
+*/
+{
+    for (int i = 0; i < 10; i++) // Iterate through the character's inventory
+    {
+        if (m_Items[i].m_sItemName[0] == '\0') // If the current inventory slot is empty, add the item and return true
+        {
+            m_Items[i] = *item;
+            return true;
+        }
+    }
+    return false; 
+}
+
+Item *Character::dropItem(char *itemName)
+/*
+A function that takes an item name parameter, and then locates and removes it from the character's inventory.
+
+    Parameters
+    ----------
+    *itemName: CHAR ARRAY
+        A pointer to a character array representing the name of the item to remove from the character's inventory.
+
+    Returns
+    -------
+    ITEM
+        A pointer to an item that was removed from the character's inventory. NULL if the item was not found.
+*/
+{
+    for (int i = 0; i < 10; i++) // Iterate through the character's inventory
+    {
+        if (strcmp(m_Items[i].m_sItemName, itemName) == 0) // If the current inventory slot matches the item name, remove the item and return it
+        {
+            Item *temp = &m_Items[i]; // Create a temporary item pointer to return
+            m_Items[i].m_sItemName[0] = '\0'; // Set the item name to null
+            return temp;
+        }
+    }
+    return NULL;
+}
+
 // ** Character Observers ** //
 
-void Character::getName(char *name)
+char *Character::getName()
 /*
-A function that takes a name parameter, and copies it to a character array.
+A function that returns the name member.
 
-    Parameters
+    Returns
     ----------
-    *name: CHAR ARRAY
-        A pointer to a character array to copy our member array to.
+    *m_sName: CHAR ARRAY
+        Returns m_sName, a pointer to a character array.
 */
 {
-    strcpy_s(name, 65, m_sName);
+    return m_sName;
 }
 
-void Character::getClass(int &cl)
+int Character::getClass()
 /*
-A function that takes a class parameter, and copies it to a character class.
+A function that returns the class archetype.
 
-    Parameters
+    Returns
     ----------
-    cl: INT
-        An integer representing a 'class' archetype.
+    m_iClass: INT
+        The member representing a 'class' archetype.
 */
 {
-    cl = m_iClass;
+    return m_iClass;
 }
 
-void Character::getAlignment(int &al)
+int Character::getAlignment()
 /*
-A function that takes an alignment parameter, and copies it to a character alignment.
+A function that returns the Character's alignment.
 
-    Parameters
+    Returns
     ----------
-    al: INT
-        An integer representing a 'alignment' archetype.
+    m_iAlignment: INT
+        The member representing a 'alignment' archetype.
 */
 {
-    al = m_iAlignment;
+    return m_iAlignment;
 }
 
-void Character::getHitPoints(int &hp)
+int Character::getHitPoints()
 /*
-A function that takes a hit point parameter, and copies it to a character hit point value.
+A function that returns a Character's hit point value.
 
-    Parameters
+    Returns
     ----------
-    hp: INT
+    m_iHitPoints: INT
         An integer representing a hit point value.
 */
 {
-    hp = m_iHitPoints;
+    return m_iHitPoints;
 }
 
-void Character::getStrength(int *str)
+int Character::getStrength()
 /*
-A function that takes a strength parameter, and copies it to the strength value index.
+A function returns the strength value.
 
-    Parameters
+    Returns
     ----------
     str: INT
         An integer representing a strength value.
 */
 {
-    *str = m_iCharTraits[0];
+    return m_iCharTraits[0];
 }
 
-void Character::getDexterity(int *dex)
+int Character::getDexterity()
 /*
-A function that takes a dexterity parameter, and copies it to the dexterity value index.
+A function returns the dexertity value.
 
-    Parameters
+    Returns
     ----------
     dex: INT
         An integer representing a dexterity value.
 */
 {
-    *dex = m_iCharTraits[1];
+    return m_iCharTraits[1];
 }
 
-void Character::getConstitution(int *cn)
+int Character::getConstitution()
 /*
-A function that takes a constitution parameter, and copies it to the constitution value index.
+A function returns the constitution value.
 
-    Parameters
+    Returns
     ----------
     cn: INT
         An integer representing a constitution value.
 */
 {
-    *cn = m_iCharTraits[2];
+    return m_iCharTraits[2];
 }
 
-void Character::getIntelligence(int *itl)
+int Character::getIntelligence()
 /*
-A function that takes an intelligence parameter, and copies it to the intelligence value index.
+A function returns the intelligence value.
 
-    Parameters
+    Returns
     ----------
     itl: INT
         An integer representing an intelligence value.
 */
-{
-    *itl = m_iCharTraits[3];
+{ 
+    return m_iCharTraits[3];
 }
 
-void Character::getWisdom(int *wis)
+int Character::getWisdom()
 /*
-A function that takes a wisdom parameter, and copies it to the wisdom value index.
+A function returns the wisdom value.
 
-    Parameters
+    Returns
     ----------
     wis: INT
         An integer representing a wisdom value.
 */
 {
-    *wis = m_iCharTraits[4];
+    return m_iCharTraits[4];
 }
 
-void Character::getCharisma(int *chr)
+int Character::getCharisma()
 /*
-A function that takes a charisma parameter, and copies it to the charisma value index.
+A function returns the charisma value.
 
-    Parameters
+    Returns
     ----------
     chr: INT
         An integer representing a charisma value.
 */
 {
-    *chr = m_iCharTraits[5];
+    return m_iCharTraits[5];
+}
+
+Item *Character::getItem(char *itemName)
+/*
+A function that takes an item name parameter, and returns the item from the character's inventory.
+
+    Parameters
+    ----------
+    *itemName: CHAR ARRAY
+        A pointer to a character array representing the name of the item to return from the character's inventory.
+
+    Returns
+    -------
+    ITEM
+        A pointer to an item that was removed from the character's inventory. NULL if the item was not found.
+*/
+{
+    for (int i = 0; i < 10; i++) // Iterate through the character's inventory
+    {
+        if (strcmp(m_Items[i].m_sItemName, itemName) == 0) // If the current inventory slot matches the item name, return the item
+        {
+            return &m_Items[i];
+        }
+    }
+    return NULL;
 }
 
 // ** Character Destructor ** //
@@ -307,7 +384,7 @@ Character::~Character()
 
 void Character::printAll()
 /*
-A function that prints all character data members to console.
+A function that prints all character data members to console. Includes the items they are holding.
 */
 {
     cout << "Name: " << m_sName << endl;
@@ -320,4 +397,15 @@ A function that prints all character data members to console.
     cout << "Intelligence: " << m_iCharTraits[3] << endl;
     cout << "Wisdom: " << m_iCharTraits[4] << endl;
     cout << "Charisma: " << m_iCharTraits[5] << endl;
+    cout << "Inventory: " << endl;
+    for (int i = 0; i < 10; i++)
+    {
+        if (m_Items[i].m_sItemName[0] != '\0')
+        {
+            cout << "Item Name: " << m_Items[i].m_sItemName << endl;
+            cout << "Item Type: " << m_Items[i].m_iType << endl;
+            cout << "Item Value: " << m_Items[i].m_dValue << endl;
+            cout << "Item Weight: " << m_Items[i].m_dWeight << endl;
+        }
+    }
 }
