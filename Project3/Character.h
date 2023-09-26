@@ -1,7 +1,6 @@
 // Character.h -- CS221 -- Fall '23 -- Project 03//
 
-#ifndef CHARACTER_H
-#define CHARACTER_H
+#pragma once
 
 #include <string>
 #include "Item.h"
