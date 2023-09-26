@@ -20,7 +20,7 @@ private:
 public:
 
     // ** Public Data Members ** //
-    Character *m_pNext; // Pointer to the next character in the list
+    Character *m_pNext; // Pointer to the next Character in the list
 
     // ** Character Constructors ** //
     Character(); // Default constructor
