@@ -20,7 +20,6 @@ CharacterList::CharacterList()
 
 bool CharacterList::addCharacter(Character *newCharacter)
 /*
-#TODO - Add a sort functionality per req
 A function that takes a character pointer, and adds it to a ordered linked list sorted by name.
 
     Parameters
@@ -46,12 +45,19 @@ A function that takes a character pointer, and adds it to a ordered linked list 
     else
     {
         Character *pCurrent = m_pHead;
+        Character *pPrevious = nullptr;
         while (pCurrent != nullptr)
         {
+            // If the new character's name is less than the current character's name, insert the new character before the current character
+            if (strcmp(newCharacter->getName(), pCurrent->getName()) < 0)
+            {
+                pPrevious->m_pNext = newCharacter;
+                newCharacter->m_pNext = pCurrent;
+                return true;
+            }
+            pPrevious = pCurrent;
             pCurrent = pCurrent->m_pNext;
         }
-        pCurrent->m_pNext = newCharacter;
-        return true;
     }
     return false;
 }
@@ -97,6 +103,10 @@ A function that takes a character name, and removes it from the list.
                     pPrevious->m_pNext = pCurrent->m_pNext; // Set the previous Character's next pointer to the current Character's next pointer
                     return pCurrent; 
                 }
+            }
+            else 
+            {
+                return nullptr; // Return null if the character is not found
             }
             pPrevious = pCurrent;
             pCurrent = pCurrent->m_pNext;
@@ -260,6 +270,30 @@ A function that prints the data members of each character in the list to the con
             cout << "Charisma: " << pCurrent->getCharisma() << endl;
             cout << endl;
             pCurrent = pCurrent->m_pNext;
+        }
+    }
+}
+
+// ** CharacterList Destructors ** //
+
+CharacterList::~CharacterList()
+// Destructor - Deletes all characters in the list //
+{
+    // If the list is empty, return null
+    if (m_pHead == nullptr)
+    {
+        return;
+    }
+
+    // If the list is not empty, delete all characters in the list
+    else
+    {
+        Character *pCurrent = m_pHead;
+        while (pCurrent != nullptr)
+        {
+            Character *pTemp = pCurrent;
+            pCurrent = pCurrent->m_pNext;
+            delete pTemp;
         }
     }
 }
