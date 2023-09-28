@@ -40,7 +40,7 @@ A function that takes a character pointer, and adds it to a ordered linked list 
         return true;
     }
 
-    // If the list is not empty, add the character to the end of the list
+    // If the list is not empty, add the character to the correct position in the list
     else
     {
         Character *pCurrent = m_pHead;
@@ -52,16 +52,8 @@ A function that takes a character pointer, and adds it to a ordered linked list 
             {
                 if (pPrevious == nullptr) // If the previous character is null, set the head to the new character
                 {
-                    if (pPrevious == nullptr) // If the previous character is null, insert the new character before the head
-                    {
-                        newCharacter->m_pNext = m_pHead;
-                        m_pHead = newCharacter;
-                    }
-                    else // Otherwise, set the previous character's next pointer to the new character
-                    {
-                        pPrevious->m_pNext = newCharacter;
-                    }
-                    return true;
+                    newCharacter->m_pNext = m_pHead;
+                    m_pHead = newCharacter;
                 }
                 else // Otherwise, set the previous character's next pointer to the new character
                 {
@@ -70,14 +62,12 @@ A function that takes a character pointer, and adds it to a ordered linked list 
                 }
                 return true;
             }
-            else //Otherwise, add the new character after the current character
-            {
-               pCurrent->m_pNext = newCharacter;
-               return true;
-            }
             pPrevious = pCurrent;
             pCurrent = pCurrent->m_pNext;
         }
+        // If we reach the end of the list, add the new character to the end
+        pPrevious->m_pNext = newCharacter;
+        return true;
     }
     return false;
 }
@@ -167,12 +157,19 @@ A function that takes a character name and an item pointer, and adds the item to
             // If the current Character name and the parameter are equal, add the item to the Character's inventory
             if (strcmp(pCurrent->getName(), characterName) == 0)
             {
-                pCurrent->addItem(newItem);
-                return true;
+                if (pCurrent->addItem(newItem) == true) // If the item was successfully added to the character's inventory, return true
+                {
+                    return true;
+                }
+                else // Otherwise, return false
+                {
+                    return false;
+                }
             }
             pCurrent = pCurrent->m_pNext;
         }
     }
+    // If the character was not found, return false
     return false;
 }
 
@@ -341,4 +338,38 @@ A function that prints the data members of each character in the list to the con
             pCurrent = pCurrent->m_pNext;
         }
     }
+}
+
+void CharacterList::printItems(char *characterName)
+/*
+A function that prints the items in a character's inventory to the console.
+
+    Parameters
+    ----------
+    *characterName: CHAR ARRAY
+        A pointer to the Character name to print the items from.
+*/
+{
+    // If the list is empty, return null
+    if (m_pHead == nullptr)
+    {
+        return;
+    }
+
+    // If the list is not empty, print the items in a character's inventory
+    else
+    {
+        Character *pCurrent = m_pHead;
+        while (pCurrent != nullptr)
+        {
+            // If the current Character name and the parameter are equal, print the items in the Character's inventory
+            if (strcmp(pCurrent->getName(), characterName) == 0)
+            {
+                pCurrent->printItems();
+                return;
+            }
+            pCurrent = pCurrent->m_pNext;
+        }
+    }
+    return;
 }

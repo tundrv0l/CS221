@@ -20,6 +20,11 @@ Character::Character()
     {
         m_iCharTraits[i] = 0;
     }
+
+    for (int i = 0; i < 10; i++)
+    {
+        m_Items[i].m_sItemName[0] = '\0';
+    }
 }
 
 Character::Character(char *name, int cl, int al, int hp, int str, int dex, int cn, int itl, int wis, int chr) : m_iCharTraits{ str, dex, cn, itl, wis, chr }
@@ -29,6 +34,11 @@ Character::Character(char *name, int cl, int al, int hp, int str, int dex, int c
     m_iClass = cl;
     m_iAlignment = al;
     m_iHitPoints = hp;
+
+    for (int i = 0; i < 10; i++)
+    {
+        m_Items[i].m_sItemName[0] = '\0';
+    }
 }
 
 // ** Character Transformers ** //
@@ -181,7 +191,7 @@ A function that takes an item parameter, and adds it to the character's inventor
     for (int i = 0; i < 10; i++) // Iterate through the character's inventory
     {
         if (m_Items[i].m_sItemName[0] == '\0') // If the current inventory slot is empty, add the item and return true
-        {
+        {   
             m_Items[i] = *item;
             return true;
         }
@@ -360,7 +370,7 @@ A function that takes an item name parameter, and returns the item from the char
     Returns
     -------
     ITEM
-        A pointer to an item that was removed from the character's inventory. NULL if the item was not found.
+        A pointer to an item that was found from the character's inventory. NULL if the item was not found.
 */
 {
     for (int i = 0; i < 10; i++) // Iterate through the character's inventory
@@ -416,4 +426,21 @@ A function that prints the character's name to console.
 */
 {
     cout << m_sName << endl;
+}
+
+void Character::printItems()
+/*
+A function that prints the character's items to console.
+*/
+{
+    for (int i = 0; i < 10; i++)
+    {
+        if (m_Items[i].m_sItemName[0] != '\0')
+        {
+            cout << "Item Name: " << m_Items[i].m_sItemName << endl;
+            cout << "Item Type: " << m_Items[i].m_iType << endl;
+            cout << "Item Value: " << m_Items[i].m_dValue << endl;
+            cout << "Item Weight: " << m_Items[i].m_dWeight << endl;
+        }
+    }
 }

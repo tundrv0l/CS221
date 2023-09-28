@@ -116,6 +116,7 @@ int main(int argc, char **argv)
 		cout << " Failed to add Pouch to Rimbard's items.\n";
 	}
 	maxGrade += 0.3;
+	theList->printItems("Rimbard");
 
 	// Testing new get functions in Character class
 	cout << "\nTesting new \"get\" functions in Character class.\n";
@@ -293,6 +294,7 @@ int main(int argc, char **argv)
 	cout.flush();
 #endif
 
+	theList->printList();
 	// Add Character 3
 	player = new Character("Grayhawk", 3, 3, 48, 17, 15, 17, 12, 8, 9);
 
@@ -369,7 +371,7 @@ int main(int argc, char **argv)
 	cout << "Grade = " << grade <<	" out of a possible " << maxGrade << " points\n"; 
 	cout.flush();
 #endif
-
+	theList->printList();
 	// Add Character 4
 	player = new Character("Marcus_Leonus", 1, 3, 46, 18, 16, 16, 11, 8, 8);
 
@@ -532,7 +534,7 @@ int main(int argc, char **argv)
 	cout << "Grade = " << grade <<	" out of a possible " << maxGrade << " points\n"; 
 	cout.flush();
 #endif
-
+	theList->printList();
 	// Add Character 5
 	player = new Character("Balrug", 5, 3, 29, 12, 14, 15, 17, 18, 12);
 
@@ -562,6 +564,7 @@ int main(int argc, char **argv)
 		cout.flush();
 	}
 	maxGrade += 1.0;
+	theList->printList();
 	// p1 = Rimbard
 	// p2 = Silverleaf
 	// p3 = Grayhawk
@@ -668,6 +671,8 @@ int main(int argc, char **argv)
 	item->m_dWeight = 1;
 	cout << "Trying to add item to Rimbard.\n";
 	cout.flush();
+	theList->printItems("Rimbard");
+	theList->printList();
 	if(theList->addItem("Rimbard", item))
 	{
 		cout << "   Item added successfully.\n";
