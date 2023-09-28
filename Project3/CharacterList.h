@@ -24,6 +24,9 @@ public:
     Item *getItem(char *characterName, char *itemName); // Returns an item from a character's inventory
     void printCharacters(); // Prints a character's data members to console
 
+    // ** CharacterList Functions ** //
+    void printList(); // Prints the list to console (REMOVE THIS)
+
     // ** CharacterList Destructors ** //
     ~CharacterList(); // Destructor
 };

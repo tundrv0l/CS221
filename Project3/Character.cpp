@@ -409,3 +409,11 @@ A function that prints all character data members to console. Includes the items
         }
     }
 }
+
+void Character::printName()
+/*
+A function that prints the character's name to console.
+*/
+{
+    cout << m_sName << endl;
+}

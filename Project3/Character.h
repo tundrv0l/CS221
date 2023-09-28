@@ -62,6 +62,7 @@ public:
 
     // ** Character Functions ** //
     void printAll(); // Prints all character data members to console, includes the items they are holding
+    void printName(); // Prints the character's name to console
 
 
 };

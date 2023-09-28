@@ -48,6 +48,7 @@ int main(int argc, char **argv)
 	p1 = player;
 	if(theList->addCharacter(player)) 
 	{
+		theList->printList();
 #ifdef GRADING
 		cout << "Player Rimbard added as first in the list.  1 point added.\n";
 		grade += 1.0;	// Assume first player added correctly at start of list
@@ -223,6 +224,7 @@ int main(int argc, char **argv)
 	p2 = player;
 	if(theList->addCharacter(player))
 	{
+		theList->printList();
 #ifdef GRADING
 		if((p1->m_pNext != NULL) && (strcmp(p1->m_pNext->getName(), "Silverleaf") == 0))
 		{
@@ -772,6 +774,7 @@ int main(int argc, char **argv)
 
 	// Remove player at end of list
 	player = theList->deleteCharacter("Silverleaf");
+	theList->printList();
 	if((player != NULL) && (strcmp(player->getName(), "Silverleaf") == 0))
 	{
 		cout << "   Successfully deleted last character in the list (Silverleaf).\n";

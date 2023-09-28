@@ -40,7 +40,6 @@ A function that takes a character pointer, and adds it to a ordered linked list 
         return true;
     }
 
-
     // If the list is not empty, add the character to the end of the list
     else
     {
@@ -51,9 +50,30 @@ A function that takes a character pointer, and adds it to a ordered linked list 
             // If the new character's name is less than the current character's name, insert the new character before the current character
             if (strcmp(newCharacter->getName(), pCurrent->getName()) < 0)
             {
-                pPrevious->m_pNext = newCharacter;
-                newCharacter->m_pNext = pCurrent;
+                if (pPrevious == nullptr) // If the previous character is null, set the head to the new character
+                {
+                    if (pPrevious == nullptr) // If the previous character is null, insert the new character before the head
+                    {
+                        newCharacter->m_pNext = m_pHead;
+                        m_pHead = newCharacter;
+                    }
+                    else // Otherwise, set the previous character's next pointer to the new character
+                    {
+                        pPrevious->m_pNext = newCharacter;
+                    }
+                    return true;
+                }
+                else // Otherwise, set the previous character's next pointer to the new character
+                {
+                    pPrevious->m_pNext = newCharacter;
+                    newCharacter->m_pNext = pCurrent;
+                }
                 return true;
+            }
+            else //Otherwise, add the new character after the current character
+            {
+               pCurrent->m_pNext = newCharacter;
+               return true;
             }
             pPrevious = pCurrent;
             pCurrent = pCurrent->m_pNext;
@@ -294,6 +314,31 @@ CharacterList::~CharacterList()
             Character *pTemp = pCurrent;
             pCurrent = pCurrent->m_pNext;
             delete pTemp;
+        }
+    }
+}
+
+// ** CharacterList Functions ** REMOVE THIS FROM DELIVERABLE//
+
+void CharacterList::printList()
+/*
+A function that prints the data members of each character in the list to the console.
+*/
+{
+    // If the list is empty, return null
+    if (m_pHead == nullptr)
+    {
+        return;
+    }
+
+    // If the list is not empty, print the data members of each character in the list
+    else
+    {
+        Character *pCurrent = m_pHead;
+        while (pCurrent != nullptr) // Iterate through the list
+        {
+            pCurrent->printName();
+            pCurrent = pCurrent->m_pNext;
         }
     }
 }
