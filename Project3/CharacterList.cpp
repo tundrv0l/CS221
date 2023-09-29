@@ -281,21 +281,5 @@ A function that prints the data members of each character in the list to the con
 CharacterList::~CharacterList()
 // Destructor - Deletes all characters in the list //
 {
-    // If the list is empty, return null
-    if (m_pHead == nullptr)
-    {
-        return;
-    }
-
-    // If the list is not empty, delete all characters in the list
-    else
-    {
-        Character *pCurrent = m_pHead;
-        while (pCurrent != nullptr)
-        {
-            Character *pTemp = pCurrent;
-            pCurrent = pCurrent->m_pNext;
-            delete pTemp;
-        }
-    }
+    delete m_pHead;
 }

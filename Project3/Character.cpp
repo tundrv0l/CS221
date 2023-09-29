@@ -386,8 +386,11 @@ A function that takes an item name parameter, and returns the item from the char
 // ** Character Destructor ** //
 
 Character::~Character()
-// Destructor - Does nothing //
+/*
+A destructor for the Character class.
+*/
 {
+    delete m_pNext;
 }
 
 // ** Character Functions ** //
