@@ -93,35 +93,30 @@ A function that takes a character name, and removes it from the list.
         return nullptr;
     }
 
-    // If the list is not empty, remove the character from the list
-    else
+    // If the head is the character to be deleted, remove the head
+    if (strcmp(m_pHead->getName(), characterName) == 0)
     {
-        Character *pCurrent = m_pHead;
-        Character *pPrevious = nullptr;
-        while (pCurrent != nullptr)
-        {
-            // If the current Character name and the parameter are equal, remove the Character from the list
-            if (strcmp(pCurrent->getName(), characterName) == 0)
-            {
-                if (pPrevious == nullptr) // If the previous Character is null, set the head to the next character
-                {
-                    m_pHead = pCurrent->m_pNext; 
-                    return pCurrent; 
-                }
-                else
-                {
-                    pPrevious->m_pNext = pCurrent->m_pNext; // Set the previous Character's next pointer to the current Character's next pointer
-                    return pCurrent; 
-                }
-            }
-            else 
-            {
-                return nullptr; // Return null if the character is not found
-            }
-            pPrevious = pCurrent;
-            pCurrent = pCurrent->m_pNext;
-        }
+        Character *temp = m_pHead;
+        m_pHead = m_pHead->m_pNext;
+        return temp;
     }
+
+    // If the character to be deleted is not the head, search for it
+    Character *pCurrent = m_pHead->m_pNext;
+    Character *pPrevious = m_pHead;
+    while (pCurrent != nullptr)
+    {
+        // If the current Character name and the parameter are equal, remove the Character from the list
+        if (strcmp(pCurrent->getName(), characterName) == 0)
+        {
+            pPrevious->m_pNext = pCurrent->m_pNext; // Set the previous Character's next pointer to the current Character's next pointer
+            return pCurrent;
+        }
+        pPrevious = pCurrent;
+        pCurrent = pCurrent->m_pNext;
+    }
+
+    // If the character was not found, return null
     return nullptr;
 }
 
@@ -275,17 +270,7 @@ A function that prints the data members of each character in the list to the con
         Character *pCurrent = m_pHead;
         while (pCurrent != nullptr) // Iterate through the list
         {
-            cout << "Name: " << pCurrent->getName() << endl;
-            cout << "Class: " << pCurrent->getClass() << endl;
-            cout << "Alignment: " << pCurrent->getAlignment() << endl;
-            cout << "Hit Points: " << pCurrent->getHitPoints() << endl;
-            cout << "Strength: " << pCurrent->getStrength() << endl;
-            cout << "Dexterity: " << pCurrent->getDexterity() << endl;
-            cout << "Constitution: " << pCurrent->getConstitution() << endl;
-            cout << "Intelligence: " << pCurrent->getIntelligence() << endl;
-            cout << "Wisdom: " << pCurrent->getWisdom() << endl;
-            cout << "Charisma: " << pCurrent->getCharisma() << endl;
-            cout << endl;
+            pCurrent->printAll(); // Print the current character's data members
             pCurrent = pCurrent->m_pNext;
         }
     }
@@ -313,63 +298,4 @@ CharacterList::~CharacterList()
             delete pTemp;
         }
     }
-}
-
-// ** CharacterList Functions ** REMOVE THIS FROM DELIVERABLE//
-
-void CharacterList::printList()
-/*
-A function that prints the data members of each character in the list to the console.
-*/
-{
-    // If the list is empty, return null
-    if (m_pHead == nullptr)
-    {
-        return;
-    }
-
-    // If the list is not empty, print the data members of each character in the list
-    else
-    {
-        Character *pCurrent = m_pHead;
-        while (pCurrent != nullptr) // Iterate through the list
-        {
-            pCurrent->printName();
-            pCurrent = pCurrent->m_pNext;
-        }
-    }
-}
-
-void CharacterList::printItems(char *characterName)
-/*
-A function that prints the items in a character's inventory to the console.
-
-    Parameters
-    ----------
-    *characterName: CHAR ARRAY
-        A pointer to the Character name to print the items from.
-*/
-{
-    // If the list is empty, return null
-    if (m_pHead == nullptr)
-    {
-        return;
-    }
-
-    // If the list is not empty, print the items in a character's inventory
-    else
-    {
-        Character *pCurrent = m_pHead;
-        while (pCurrent != nullptr)
-        {
-            // If the current Character name and the parameter are equal, print the items in the Character's inventory
-            if (strcmp(pCurrent->getName(), characterName) == 0)
-            {
-                pCurrent->printItems();
-                return;
-            }
-            pCurrent = pCurrent->m_pNext;
-        }
-    }
-    return;
 }

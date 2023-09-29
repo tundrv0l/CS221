@@ -53,7 +53,7 @@ A function that takes a name parameter, and sets it to a character array.
         A pointer to a character array to set our member array to.
 */
 {
-    strcpy_s(m_sName, name); // Might remove, not sure how he wants this done
+    strcpy_s(m_sName, name);
 }
 
 void Character::setClass(int cl)
@@ -397,6 +397,7 @@ void Character::printAll()
 A function that prints all character data members to console. Includes the items they are holding.
 */
 {
+    cout << "#------------------#" << endl;
     cout << "Name: " << m_sName << endl;
     cout << "Class: " << m_iClass << endl;
     cout << "Alignment: " << m_iAlignment << endl;
@@ -408,6 +409,7 @@ A function that prints all character data members to console. Includes the items
     cout << "Wisdom: " << m_iCharTraits[4] << endl;
     cout << "Charisma: " << m_iCharTraits[5] << endl;
     cout << "Inventory: " << endl;
+    cout << "-------------" << endl;
     for (int i = 0; i < 10; i++)
     {
         if (m_Items[i].m_sItemName[0] != '\0')
@@ -418,29 +420,6 @@ A function that prints all character data members to console. Includes the items
             cout << "Item Weight: " << m_Items[i].m_dWeight << endl;
         }
     }
-}
-
-void Character::printName()
-/*
-A function that prints the character's name to console.
-*/
-{
-    cout << m_sName << endl;
-}
-
-void Character::printItems()
-/*
-A function that prints the character's items to console.
-*/
-{
-    for (int i = 0; i < 10; i++)
-    {
-        if (m_Items[i].m_sItemName[0] != '\0')
-        {
-            cout << "Item Name: " << m_Items[i].m_sItemName << endl;
-            cout << "Item Type: " << m_Items[i].m_iType << endl;
-            cout << "Item Value: " << m_Items[i].m_dValue << endl;
-            cout << "Item Weight: " << m_Items[i].m_dWeight << endl;
-        }
-    }
+    cout << "#------------------#" << endl;
+    cout << endl;
 }
