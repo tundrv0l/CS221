@@ -358,7 +358,7 @@ A function returns the charisma value.
     return m_iCharTraits[5];
 }
 
-Item *Character::getItem(char *itemName)
+Item* Character::getItem(char* itemName)
 /*
 A function that takes an item name parameter, and returns the item from the character's inventory.
 
@@ -369,18 +369,19 @@ A function that takes an item name parameter, and returns the item from the char
 
     Returns
     -------
-    ITEM
+    ITEM*
         A pointer to an item that was found from the character's inventory. NULL if the item was not found.
 */
 {
+    Item* tempItems = m_Items; // Store the array into a temporary pointer for comparison
     for (int i = 0; i < 10; i++) // Iterate through the character's inventory
     {
-        if (strcmp(m_Items[i].m_sItemName, itemName) == 0) // If the current inventory slot matches the item name, return the item
+        if (strcmp(tempItems[i].m_sItemName, itemName) == 0) // If the current inventory slot matches the item name, return the item
         {
-            return &m_Items[i];
+            return &tempItems[i];
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 // ** Character Destructor ** //
