@@ -20,8 +20,8 @@ class Character
 		int		m_iHitPoints;
 		int		m_iCharTraits[6];			// Strength, Dexterity, Constitution, 
 										// Intelligence, Wisdom, Charisma
-		Possessions *BattleItems;
-		Possessions *TreasureItems;
+		Possessions *m_pBattleItems;
+		Possessions *m_pTreasureItems;
 
 	public:
 		Character	*m_pNext;
@@ -58,6 +58,7 @@ class Character
 		void setCharisma(int chr);		// Set the player's Charisma
 
 		bool addItem(Item *item);		// Add an item to the list of items
+		Item *getItem(char *itemName);	// Get an item from the list of items
 		Item *dropItem(char *itemName);
 
 		void printAll();				// Print everything about this character

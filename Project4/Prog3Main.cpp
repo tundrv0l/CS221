@@ -71,7 +71,8 @@ int main(int argc, char **argv)
 	if((item != NULL) && (strcmp(item->m_sItemName, "R_BItem_7")==0))
 	{
 		grade += 0.5;
-	cout << "\n\t Successfully found R_BItem_7. Leaf node.\n";
+		cout << "\n\t Successfully found R_BItem_7. Leaf node.\n";
+		cout << pos->getItem("R_BItem_7");
 	}
 	else
 	{
@@ -93,6 +94,7 @@ int main(int argc, char **argv)
 	else
 	{
 		cout << "\n\t*** Failed to find R_BItem_6. Interior node.***\n";
+		cout << pos->getItem("R_BItem_6");
 		cout.flush();
 	}
 	maxGrade += 0.5;
@@ -110,6 +112,7 @@ int main(int argc, char **argv)
 	else
 	{
 		cout << "\n\t*** Failed to find R_BItem_4. Root node.***\n";
+		cout << pos->getItem("R_BItem_4");
 		cout.flush();
 	}
 	maxGrade += 1.0;

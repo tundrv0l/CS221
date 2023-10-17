@@ -28,6 +28,8 @@ class Possessions
 		void printOne(Item *item);			// Print a single item.
 		void destroyTree(Item *rt);			// Recursively destroy the tree
 		void printAll(Item *rt);			// Recursively print all items in tree
-		Item *search(char *itemName);       // Generic search function 
+		Item *search(char *itemName);       // Generic search function
+		// Helper function for getItem //
+		Item *getItemCheck(char *itemName, Item *rt); // Recursive search function
 };
 #endif

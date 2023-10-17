@@ -4,6 +4,7 @@
 #include <string>
 #include <cstring>
 #include "Character.h"
+#include "Item.h"
 
 using namespace std;
 
@@ -21,10 +22,6 @@ Character::Character()
         m_iCharTraits[i] = 0;
     }
 
-    for (int i = 0; i < 10; i++)
-    {
-        m_Items[i].m_sItemName[0] = '\0';
-    }
 }
 
 Character::Character(char *name, int cl, int al, int hp, int str, int dex, int cn, int itl, int wis, int chr) : m_iCharTraits{ str, dex, cn, itl, wis, chr }
@@ -34,11 +31,6 @@ Character::Character(char *name, int cl, int al, int hp, int str, int dex, int c
     m_iClass = cl;
     m_iAlignment = al;
     m_iHitPoints = hp;
-
-    for (int i = 0; i < 10; i++)
-    {
-        m_Items[i].m_sItemName[0] = '\0';
-    }
 }
 
 // ** Character Transformers ** //
@@ -175,12 +167,12 @@ A function that takes a charisma parameter, and sets it to the charisma value in
 
 bool Character::addItem(Item *item)
 /*
-A function that takes an item parameter, and adds it to the character's inventory.
+A function that takes an item parameter, checks the item type, and then adds it to the appropiate instance of possessions.
 
     Parameters
     ----------
     *item: ITEM
-        A pointer to an item to add to the character's inventory.
+        A pointer to an item to add to the character's inventory. The type of item is checked, and then added to the appropiate instance of possessions.
 
     Returns
     -------
@@ -188,20 +180,24 @@ A function that takes an item parameter, and adds it to the character's inventor
         A boolean value representing whether or not the item was added to the inventory. TRUE if added, FALSE if not.
 */
 {
-    for (int i = 0; i < 10; i++) // Iterate through the character's inventory
+    
+    if (item->m_iType == 'BATTLE_ITEM') // Check the item type, and add it to the appropiate instance of possessions
     {
-        if (m_Items[i].m_sItemName[0] == '\0') // If the current inventory slot is empty, add the item and return true
-        {   
-            m_Items[i] = *item;
-            return true;
-        }
+        return m_pBattleItems->addItem(item);
     }
-    return false; 
+    else if (item->m_iType == 'TREASURE_ITEM')
+    {
+        return m_pTreasureItems->addItem(item);
+    }
+    else
+    {
+        return false;
+    }
 }
 
 Item *Character::dropItem(char *itemName)
 /*
-A function that takes an item name parameter, and then locates and removes it from the character's inventory.
+A function that takes an item name parameter, and then checks the item type. If the item is found, it is removed from the character's inventory.
 
     Parameters
     ----------
@@ -214,16 +210,18 @@ A function that takes an item name parameter, and then locates and removes it fr
         A pointer to an item that was removed from the character's inventory. NULL if the item was not found.
 */
 {
-    for (int i = 0; i < 10; i++) // Iterate through the character's inventory
+    
+    if (m_pBattleItems->dropItem(itemName) != nullptr) // Check if the item is in the battle items tree, if not, check the treasure items tree
     {
-        if (strcmp(m_Items[i].m_sItemName, itemName) == 0) // If the current inventory slot matches the item name, remove the item and return it
-        {
-            Item *temp = &m_Items[i]; // Create a temporary item pointer to return
-            m_Items[i].m_sItemName[0] = '\0'; // Set the item name to null
-            return temp;
-        }
+        return m_pBattleItems->dropItem(itemName);
     }
-    return NULL;
+    else
+    {
+        return m_pTreasureItems->dropItem(itemName);
+    }
+
+    return nullptr;
+
 }
 
 // ** Character Observers ** //
@@ -373,15 +371,15 @@ A function that takes an item name parameter, and returns the item from the char
         A pointer to an item that was found from the character's inventory. NULL if the item was not found.
 */
 {
-    Item* tempItems = m_Items; // Store the array into a temporary pointer for comparison
-    for (int i = 0; i < 10; i++) // Iterate through the character's inventory
+    if (m_pBattleItems->getItem(itemName) != nullptr) // Check if the item is in the battle items tree, if not, check the treasure items tree
     {
-        if (strcmp(tempItems[i].m_sItemName, itemName) == 0) // If the current inventory slot matches the item name, return the item
-        {
-            return &tempItems[i];
-        }
+        return m_pBattleItems->getItem(itemName);
     }
-    return nullptr;
+    else
+    {
+        return m_pTreasureItems->getItem(itemName);
+    }
+
 }
 
 // ** Character Destructor ** //
@@ -414,16 +412,8 @@ A function that prints all character data members to console. Includes the items
     cout << "Charisma: " << m_iCharTraits[5] << endl;
     cout << "Inventory: " << endl;
     cout << "-------------" << endl;
-    for (int i = 0; i < 10; i++)
-    {
-        if (m_Items[i].m_sItemName[0] != '\0')
-        {
-            cout << "Item Name: " << m_Items[i].m_sItemName << endl;
-            cout << "Item Type: " << m_Items[i].m_iType << endl;
-            cout << "Item Value: " << m_Items[i].m_dValue << endl;
-            cout << "Item Weight: " << m_Items[i].m_dWeight << endl;
-        }
-    }
+    m_pBattleItems->printTree();
+    m_pTreasureItems->printTree();
     cout << "#------------------#" << endl;
     cout << endl;
 }
