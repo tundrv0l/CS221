@@ -31,5 +31,9 @@ class Possessions
 		Item *search(char *itemName);       // Generic search function
 		// Helper function for getItem //
 		Item *getItemCheck(char *itemName, Item *rt); // Recursive search function
+		// Helper function for addItem //
+		bool addItemHelp(Item *newItem, Item *&rt); // Recursive function for addItem
+		// Helper function for dropItem //
+		bool dropItemHelp(char *itemName, Item *&rt); // Recursive function for dropItem
 };
 #endif
