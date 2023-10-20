@@ -21,7 +21,8 @@ Character::Character()
     {
         m_iCharTraits[i] = 0;
     }
-
+    m_pBattleItems = new Possessions();
+    m_pTreasureItems = new Possessions();
 }
 
 Character::Character(char *name, int cl, int al, int hp, int str, int dex, int cn, int itl, int wis, int chr) : m_iCharTraits{ str, dex, cn, itl, wis, chr }
@@ -31,6 +32,8 @@ Character::Character(char *name, int cl, int al, int hp, int str, int dex, int c
     m_iClass = cl;
     m_iAlignment = al;
     m_iHitPoints = hp;
+    m_pBattleItems = new Possessions();
+    m_pTreasureItems = new Possessions();
 }
 
 // ** Character Transformers ** //
@@ -180,12 +183,16 @@ A function that takes an item parameter, checks the item type, and then adds it 
         A boolean value representing whether or not the item was added to the inventory. TRUE if added, FALSE if not.
 */
 {
-    
-    if (item->m_iType == 'BATTLE_ITEM') // Check the item type, and add it to the appropiate instance of possessions
+    if (item == nullptr) // Check if the item is null
     {
+        return false;
+    }
+    
+    if (item->m_iType == BATTLE_ITEM) // Check the item type, and add it to the appropiate instance of possessions
+    {  
         return m_pBattleItems->addItem(item);
     }
-    else if (item->m_iType == 'TREASURE_ITEM')
+    else if (item->m_iType == TREASURE_ITEM)
     {
         return m_pTreasureItems->addItem(item);
     }
@@ -193,6 +200,7 @@ A function that takes an item parameter, checks the item type, and then adds it 
     {
         return false;
     }
+
 }
 
 Item *Character::dropItem(char *itemName)
@@ -210,18 +218,17 @@ A function that takes an item name parameter, and then checks the item type. If 
         A pointer to an item that was removed from the character's inventory. NULL if the item was not found.
 */
 {
-    
-    if (m_pBattleItems->dropItem(itemName) != nullptr) // Check if the item is in the battle items tree, if not, check the treasure items tree
-    {
-        return m_pBattleItems->dropItem(itemName);
+    Item* item = m_pBattleItems->dropItem(itemName); // Check if the item is in the battle items tree
+    if (item != nullptr) {
+        return item;
     }
-    else
-    {
-        return m_pTreasureItems->dropItem(itemName);
+    else {
+        item = m_pTreasureItems->dropItem(itemName); // Check the treasure items tree
+        if (item != nullptr) {
+            return item;
+        }
     }
-
-    return nullptr;
-
+    return nullptr; // Item not found in either tree
 }
 
 // ** Character Observers ** //
@@ -389,7 +396,8 @@ Character::~Character()
 A destructor for the Character class.
 */
 {
-    delete m_pNext;
+    delete m_pBattleItems;
+    delete m_pTreasureItems;
 }
 
 // ** Character Functions ** //
