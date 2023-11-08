@@ -34,9 +34,8 @@ class Possessions
 		// Helper function for addItem //
 		bool addItemHelp(Item *newItem, Item *&rt); // Recursive function for addItem
 		// Helper function for dropItem //
-		void dropItemHelp(char *itemName, Item *&rt, Item *&removedItem); // Recursive function for dropItem
 		Item* dropItemSearch(char *itemName, Item *&rt); // Recursive function for dropItem
 		// Helper function for Predecessor //
-		void GetPredecessor(char *&data, Item *rt); // Recursive function for predecessor
+		void GetPredecessor(Item* node, Item *parentNode); // Recursive function for Predecessor
 };
 #endif
