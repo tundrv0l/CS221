@@ -175,7 +175,7 @@ int main(int argc, char **argv)
 	if((item != NULL) && (strcmp(item->m_sItemName, "R_BItem_7")==0))
 	{
 		grade += 1.0;
-	cout << "\n\t Successfully removed R_BItem_7. \n\t\tNode not root with no children or only 1 on right.\n";
+		cout << "\n\t Successfully removed R_BItem_7. \n\t\tNode not root with no children or only 1 on right.\n";
 	}
 	else
 	{

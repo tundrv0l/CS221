@@ -8,8 +8,7 @@
 // - Default Constructor - //
 Possessions::Possessions()
 {
-    m_pRoot = NULL;
-    temp,back = NULL;
+    m_pRoot = nullptr;
 }
 
 // - Mutator Functions - //
@@ -51,169 +50,8 @@ This function takes an item name and removes it from the character's inventory b
     {
         return nullptr;
     }
-    temp = nullptr;     // probably not needed
-    back = nullptr;
+    temp,back = nullptr; // Set temp and back to null, used for the search function
     return dropItemSearch(itemName, m_pRoot);
-}
-
-
-Item* Possessions::dropItemSearch(char *itemName, Item *&rt)
-/*
-*/
-{
-    temp = rt;
-    Item *removedItem = nullptr; // Create a pointer to the removed item
-    if (rt == nullptr) // Check if the root node is null
-    {
-        return nullptr;
-    }
-    if (strcmp(itemName, rt->m_sItemName) < 0) // Check for a value less than the root to be in the left subtree 
-    {
-        back = temp;
-        return dropItemSearch(itemName, rt->m_pLeft);
-    }
-    else if (strcmp(itemName, rt->m_sItemName) > 0) // Check for a value greater than the root to be in the right subtree
-    {
-        back = temp;
-        return dropItemSearch(itemName, rt->m_pRight);
-    }
-    else // found node to delete
-    {
-        if (temp->m_pLeft == nullptr)       // if node has no left child
-        {   
-            if (back == nullptr) {
-                m_pRoot = temp->m_pRight;
-            }
-            else if (strcmp(back->m_sItemName, temp->m_sItemName) > 0) // Back's left child
-            {
-                back->m_pLeft = temp->m_pRight;
-            }
-            else
-            {
-                back->m_pRight = temp->m_pRight;
-            }
-            return temp;
-        }
-        else if (temp->m_pRight == nullptr)     // if node has no right child
-        {
-            if (back == nullptr) {
-                m_pRoot = temp->m_pLeft;
-            }
-            else if (strcmp(back->m_sItemName, temp->m_sItemName) > 0) // Back's left child
-            {
-                back->m_pLeft = temp->m_pLeft;
-            }
-            else
-            {
-                back->m_pRight = temp->m_pLeft;
-            }
-            return temp;
-        }
-        // If this line is reached, then temp has 2 children
-
-        // find the node to replace temp, this will be the rightmost node on the left
-        Item *replacementParent = temp;
-        Item *replacementNode = temp->m_pLeft;
-        while (replacementNode->m_pRight != nullptr)   // this can be replaced with getPredecessor
-        {
-            replacementParent = replacementNode;
-            replacementNode = replacementNode->m_pRight;
-        }
-
-        // what if replacementNode has a left child?
-        if (replacementParent->m_pRight == replacementNode) {
-            replacementParent->m_pRight = replacementNode->m_pLeft;
-        } else {
-            replacementParent->m_pLeft = replacementNode->m_pLeft;
-        }
-
-
-        if (back == nullptr) {
-                m_pRoot = replacementNode;
-        }
-        else if (strcmp(back->m_sItemName, temp->m_sItemName) > 0) // Back's left child
-        {
-            back->m_pLeft = replacementNode;
-        }
-        else
-        {
-            back->m_pRight = replacementNode;
-        }
-
-        if (replacementNode != temp->m_pLeft)   // this will ensure there is no self loop
-        {
-            replacementNode->m_pLeft = temp->m_pLeft;
-        }
-        replacementNode->m_pRight = temp->m_pRight;
-
-        temp->m_pLeft = nullptr;
-        temp->m_pRight = nullptr;
-
-        return temp;
-
-        // Tree results:
-//                        4
-//                      /   \
-//                     2     6
-//                    / \   / \
-//                   1   3  5  7
-    }
-    
-}
-
-/* void Possessions::dropItemHelp(char *itemName, Item *&rt, Item *&removedItem)
-/*
-This function takes an item name and a root of a binary tree and removes the item from the tree. 
-
-    Parameters
-    ----------
-    *itemName: CHAR
-        A pointer to an item name to remove from the character's inventory.
-    *&rt: Item
-        A reference to a pointer to the root of the binary tree.
-    *&removedItem: Item
-        A reference to a pointer to the removed item.
-
-    Returns
-    -------
-    None
-
-{
-
-    char * data = new char[50];
-    
-    removedItem = rt;
-    temp = rt;
-    if (rt->m_pLeft == nullptr) // Case 2: No Left Child
-    {
-        rt = rt->m_pRight;
-        delete temp;
-    }
-    else if (rt->m_pRight == nullptr) // Case 3: No Right Child
-    {
-        rt = rt->m_pLeft;
-        delete temp;
-    }
-    else // Case 4: Two Children
-    {
-        // Find the node with the maximum value in the left subtree
-        GetPredecessor(data, rt->m_pLeft);
-        strcpy_s(rt->m_sItemName, data);
-        dropItemSearch(data, rt->m_pLeft);
-    }
-
-} */
-
-void Possessions::GetPredecessor(char *&data, Item *rt)
-/*
-*/
-{
-    while (rt->m_pRight != nullptr)
-    {
-        rt = rt->m_pRight;
-    }
-    // Copy the rt data into the data pointer
-    data = rt->m_sItemName;
 }
 
 // - Observer Functions - //
@@ -254,9 +92,9 @@ This function takes an item structure and prints out the item's information.
 {
     cout << item->m_sItemName << endl;
     cout << item->m_sDesc << endl;
-    cout << item->m_iType << endl;
-    cout << item->m_dValue << endl;
-    cout << item->m_dWeight << endl;
+    cout << "The Item Type is: " << item->m_iType << endl;
+    cout << "The Item Value is: " << item->m_dValue << endl;
+    cout << "The Item Weight is: " << item->m_dWeight << endl;
 }
 
 void Possessions::printAll(Item *rt)
@@ -397,49 +235,140 @@ This private function takes an item name and a root, and adds an item to the cha
     }
 }
 
-/* bool Possessions::dropItemHelp(char *itemName, Item *&rt)
+Item* Possessions::dropItemSearch(char *itemName, Item *&rt)
 /*
-This private function takes an item name and a root, and removes an item from the character's inventory binary tree.
+This function takes an item name and a root of a binary tree and searches/removes the item from the tree. 
 
     Parameters
     ----------
     *itemName: CHAR
         A pointer to an item name to remove from the character's inventory.
     *&rt: Item
-        A reference to the pointer to the root of the character's inventory binary tree.
+        A reference to a pointer to the root of the binary tree.
 
     Returns
     -------
-    BOOL
-        Will return true if the item was successfully removed, false otherwise.
-
+    ITEM
+        A pointer to the item that was removed from the inventory. NULL if the item was not found.
+*/
 {
-    temp = rt; // Set temp to the root passed in
-    if (rt->m_pLeft == nullptr) 
+    temp = rt;
+    if (rt == nullptr) // Case 1: Empty Tree, or item not found
     {
-        rt = rt->m_pRight;
-        delete temp;
-        return true;
-    } 
-    else if (rt->m_pRight == nullptr)
-    {
-        rt = rt->m_pLeft;
-        delete temp;
-        return true;
-    } 
-    else 
-    {
-        while (rt->m_pRight != nullptr) 
-        {
-            rt = rt->m_pRight;
-        }
-        strcpy(itemName, rt->m_sItemName);
-        rt = rt->m_pLeft;
-        dropItem(itemName);
-        return true;
+        return nullptr;
     }
-    return false;
-} */
+    if (strcmp(itemName, rt->m_sItemName) < 0) // Search the left subtree
+    {
+        back = temp; //Maintain back to keep track of the parent node
+        return dropItemSearch(itemName, rt->m_pLeft);
+    }
+    else if (strcmp(itemName, rt->m_sItemName) > 0) // Search the right subtree
+    {
+        back = temp; //Maintain back to keep track of the parent node
+        return dropItemSearch(itemName, rt->m_pRight);
+    }
+    else // Found the node we want to delete
+    {
+        if (temp->m_pLeft == nullptr)       // Case 2: No Left child
+        {   
+            if (back == nullptr) { // Case 2a: The node happens to be the root node
+                m_pRoot = temp->m_pRight; // Set the root to the node's right child
+            }
+            else if (strcmp(back->m_sItemName, temp->m_sItemName) > 0) // Case 2b: The node is a left child
+            {
+                back->m_pLeft = temp->m_pRight; // Set the parent's left child to the node's right child
+            }
+            else
+            {
+                back->m_pRight = temp->m_pRight; // Case 2c: The node is a right child
+            }
+            return temp; // Deleted the node, return early. 
+        }
+        else if (temp->m_pRight == nullptr)     // Case 3: No Right child
+        {
+            if (back == nullptr) { // Case 3a: The node happens to be the root node
+                m_pRoot = temp->m_pLeft;
+            }
+            else if (strcmp(back->m_sItemName, temp->m_sItemName) > 0) // Case 3b: The node is a left child
+            {
+                back->m_pLeft = temp->m_pLeft; // Set the parent's left child to the node's left child
+            }
+            else
+            {
+                back->m_pRight = temp->m_pLeft; // Case 3c: The node is a right child
+            }
+            return temp;
+        }
+        // Case 4: The Node has two children
+
+        // Set up replacement ndoes for both the current node and parent of current. 
+        Item *replacementParent = temp;
+        Item *replacementNode = temp->m_pLeft;
+        GetPredecessor(replacementNode, replacementParent); // Find the predecessor of the node to be deleted
+
+        // Handle the case where the predecessor was the left child of the node to be deleted
+        if (replacementParent->m_pRight == replacementNode) 
+        {
+            replacementParent->m_pRight = replacementNode->m_pLeft;
+        }
+        else 
+        {
+            replacementParent->m_pLeft = replacementNode->m_pLeft;
+        }
+
+
+        if (back == nullptr) // Case 4a: The node happens to be the root node
+        {
+            m_pRoot = replacementNode;
+        }
+        else if (strcmp(back->m_sItemName, temp->m_sItemName) > 0) // Case 4b: The node is a left child
+        {
+            back->m_pLeft = replacementNode;
+        }
+        else
+        {
+            back->m_pRight = replacementNode; // Case 4c: The node is a right child
+        }
+
+        // Handles preserving the children of the node to be deleted
+        if (replacementNode != temp->m_pLeft)
+        {
+            replacementNode->m_pLeft = temp->m_pLeft;
+        }
+        replacementNode->m_pRight = temp->m_pRight;
+
+        // Set the left and right children of the node to be deleted to null
+        temp->m_pLeft = nullptr;
+        temp->m_pRight = nullptr;
+
+        return temp; // Deleted the node, return early.
+    }
+    return nullptr; // Item not found
+}
+
+
+void Possessions::GetPredecessor(Item* node, Item *parentNode)
+/*
+This function takes an two nodes, one node to find the predecessor of, and then that nodes parent. 
+
+    Parameters
+    ----------
+    *node: CHAR
+        A pointer to a node to find the predecessor of.
+    *parentNode: Item
+        Node's parent to maintain.
+
+    Returns
+    -------
+    None
+*/
+{
+    while (node->m_pRight != nullptr)   // this can be replaced with getPredecessor
+        {
+            parentNode = node;
+            node = node->m_pRight;
+        }
+}
 
 
 // - Destructor - //
