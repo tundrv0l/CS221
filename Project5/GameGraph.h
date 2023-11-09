@@ -10,6 +10,8 @@
 
 #define NUMOFROOMS 20
 
+using namespace std;
+
 struct Room
 {
     char m_sRoomName[64];

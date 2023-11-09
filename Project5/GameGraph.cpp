@@ -72,31 +72,37 @@ A function that will load the game scenario from a file.
         // Read North door
         getNextLine(line, 128);
         link = atoi(line); // Convert to room index
+        setLinks(i, link, 'N');
         // Call function to set link in adjacency matrix
 
         // Read South door
         getNextLine(line, 128);
         link = atoi(line);    // Convert to room index
+        setLinks(i, link, 'S');
         // Call function to set link in adjacency matrix
 
         // Read East door
         getNextLine(line, 128);
         link = atoi(line);    // Convert to room index
+        setLinks(i, link, 'E');
         // Call function to set link in adjacency matrix
 
         // Read West door
         getNextLine(line, 128);
         link = atoi(line);    // Convert to room index
+        setLinks(i, link, 'W');
         // Call function to set link in adjacency matrix
 
         // Read up stairway
         getNextLine(line, 128);
         link = atoi(line);    // Convert to room index
+        setLinks(i, link, 'U');
         // Call function to set link in adjacency matrix
 
         // Read down stairway
         getNextLine(line, 128);
         link = atoi(line);    // Convert to room index
+        setLinks(i, link, 'D');
         // Call function to set link in adjacency matrix
     }
     return true;
@@ -114,7 +120,7 @@ A function that executes a command from the user.
 */
 {
     char *p; // Char pointer to store the command
-    char direction[2]; // Char Array to store the direction
+    char direction[6]; // Char Array to store the direction
     /*int roomIdx;
     int linkIdx;
     int done;*/
@@ -123,70 +129,104 @@ A function that executes a command from the user.
     if(strcmp(p, "GO") == 0)
     {
         sscanf(command, "%s %s", p, direction);
-        if(strcmp(direction, "N") == 0)
+        if(strcmp(direction, "N") == 0 || strcmp(direction, "NORTH") == 0)
         {
             if(m_cAdjMatrix[m_iLocation][0] == 'N')
             {
-                m_iLocation = 0;
+                m_iLocation = m_cAdjMatrix[m_iLocation][1] - '0';
                 describeRoom(m_iLocation);
                 return true;
             }
             else
             {
-                cout << "You can't go that way" << endl;
+                cout << "You cannot go that direction." << endl;
                 return false;
             }
         }
-        else if(strcmp(direction, "S") == 0)
+        else if (strcmp(direction, "S") == 0 || strcmp(direction, "SOUTH") == 0)
         {
-            if(m_cAdjMatrix[m_iLocation][1] == 'S')
+            if (m_cAdjMatrix[m_iLocation][2] == 'S')
             {
-                m_iLocation = 1;
+                m_iLocation = m_cAdjMatrix[m_iLocation][3] - '0';
                 describeRoom(m_iLocation);
                 return true;
             }
             else
             {
-                cout << "You can't go that way" << endl;
+                cout << "You cannot go that direction." << endl;
+                describeRoom(m_iLocation);
                 return false;
             }
         }
-        else if(strcmp(direction, "E") == 0)
+        else if (strcmp(direction, "E") == 0 || strcmp(direction, "EAST") == 0)
         {
-            if(m_cAdjMatrix[m_iLocation][2] == 'E')
+            if (m_cAdjMatrix[m_iLocation][4] == 'E')
             {
-                m_iLocation = 2;
+                m_iLocation = m_cAdjMatrix[m_iLocation][5] - '0';
                 describeRoom(m_iLocation);
                 return true;
             }
             else
             {
-                cout << "You can't go that way" << endl;
+                cout << "You cannot go that direction." << endl;
                 return false;
             }
         }
-        else if(strcmp(direction, "W") == 0)
+        else if (strcmp(direction, "W") == 0 || strcmp(direction, "WEST") == 0)
         {
-            if(m_cAdjMatrix[m_iLocation][3] == 'W')
+            if (m_cAdjMatrix[m_iLocation][6] == 'W')
             {
-                m_iLocation = 3;
+                m_iLocation = m_cAdjMatrix[m_iLocation][7] - '0';
                 describeRoom(m_iLocation);
                 return true;
             }
             else
             {
-                cout << "You can't go that way" << endl;
+                cout << "You cannot go that direction." << endl;
                 return false;
             }
+        }
+        else if (strcmp(direction, "U") == 0 || strcmp(direction, "UP") == 0)
+        {
+            if (m_cAdjMatrix[m_iLocation][8] == 'U')
+            {
+                m_iLocation = m_cAdjMatrix[m_iLocation][9] - '0';
+                describeRoom(m_iLocation);
+                return true;
+            }
+            else
+            {
+                cout << "You cannot go that direction." << endl;
+                return false;
+            }
+        }
+        else if (strcmp(direction, "D") == 0 || strcmp(direction, "DOWN") == 0)
+        {
+            if (m_cAdjMatrix[m_iLocation][10] == 'D')
+            {
+                m_iLocation = m_cAdjMatrix[m_iLocation][11] - '0';
+                describeRoom(m_iLocation);
+                return true;
+            }
+            else
+            {
+                cout << "You cannot go that direction." << endl;
+                return false;
+            }
+        } 
+        else
+        {
+            cout << "Invalid direction" << endl;
+            return false;
         }
     }
     else if(strcmp(p, "TAKE") == 0)
     {
-        cout << "This command is not implemented"
+        cout << "This command is not implemented";
     }
     else if(strcmp(p, "FIGHT") == 0)
     {
-        cout << "This command is not implemented"
+        cout << "This command is not implemented";
     }
     else if(strcmp(p, "QUIT") == 0)
     {
@@ -274,6 +314,24 @@ A function that describes a room.
     cout << "You see a " << m_Rms[roomIdx].m_sCreatureName << " here." << endl;
 }
 
+void GameGraph::PrintAll()
+/*
+A function that prints all GameGraph data members to console, includes the items they are holding.
+*/
+{
+    for (int i = 0; i < NUMOFROOMS; i++) {
+        cout << "Room Name: " << m_Rms[i].m_sRoomName << endl;
+        cout << "Room Description: " << m_Rms[i].m_sRoomDesc << endl;
+        cout << "Room Item: " << m_Rms[i].m_sItemName << endl;
+        cout << "Room Creature: " << m_Rms[i].m_sCreatureName << endl;
+        for (int j = 0; j < NUMOFROOMS; j++) {
+            if (m_cAdjMatrix[i][j] != ' ') {
+                cout << "Link to room " << j << " in direction " << m_cAdjMatrix[i][j] << endl;
+            }
+        }
+        cout << endl;
+    }
+}
 
 
 
