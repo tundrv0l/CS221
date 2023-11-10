@@ -51,23 +51,23 @@ A function that will load the game scenario from a file.
     }
 
     done = false;
-    for(int i=0; i<20; i++)
+    for(int i=0; i<NUMOFROOMS; i++)
     {
         // Read room name
         getNextLine(line, 128);
-        /* --- Copy room name into data structure i --- */
+        strcpy(m_Rms[i].m_sRoomName, line); // Copy room name into data structure i
 
         // Read room description
         getNextLine(line, 128);
-        /* --- Copy room description into data structure i --- */
+        strcpy(m_Rms[i].m_sRoomDesc, line); // Copy room description into data structure i
 
         // Read room item
         getNextLine(line, 128);
-        /* --- Copy room item name into data structure i --- */
+        strcpy(m_Rms[i].m_sItemName, line); // Copy room item name into data structure i
 
         // Read room creature
         getNextLine(line, 128);
-        /* --- Copy room creature name into data structure i --- */
+        strcpy(m_Rms[i].m_sCreatureName, line); // Copy room creature name into data structure i
 
         // Read North door
         getNextLine(line, 128);
@@ -109,7 +109,7 @@ A function that will load the game scenario from a file.
 }
 
 
-bool GameGraph::doCommand(char *command)
+/* bool GameGraph::doCommand(char *command)
 /*
 A function that executes a command from the user.
 
@@ -117,13 +117,13 @@ A function that executes a command from the user.
     ----------
     command: *CHAR
         A character array that represents a line of text. Only valid commands are: GO, TAKE, FIGHT, QUIT
-*/
+
 {
     char *p; // Char pointer to store the command
     char direction[6]; // Char Array to store the direction
     /*int roomIdx;
     int linkIdx;
-    int done;*/
+    int done;
 
     sscanf(command, "%s", p);
     if(strcmp(p, "GO") == 0)
@@ -238,7 +238,7 @@ A function that executes a command from the user.
         return false;
     }
     return false;
-}
+} */
 
 
 
@@ -345,15 +345,51 @@ GameGraph::~GameGraph()
 
 
 
-/* void Character::setClass(int cl)
-/*
-A function that takes a class parameter, and sets it to a character class.
-
-    Parameters
-    ----------
-    cl: INT
-        An integer representing a 'class' archetype.
-
+bool GameGraph::doCommand(char *p)
 {
-    m_iClass = cl;
-} */
+    sscanf(p, "%s", p);
+    if(strcmp(p, "GO") == 0)
+    {
+        char direction[6];
+        sscanf(p, "%s %s", p, direction);
+
+        int destRoom = -1;
+        for (int i = 0; i < NUMOFROOMS; i++) {
+            if (m_cAdjMatrix[m_iLocation][i*2+1] == direction[0]) {
+                destRoom = m_cAdjMatrix[m_iLocation][i*2] - '0';
+                break;
+            }
+        }
+
+        if (destRoom == -1)
+        {
+            cout << "Invalid direction" << endl;
+            return false;
+        }
+        else
+        {
+            m_iLocation = destRoom;
+            describeRoom(m_iLocation);
+            return true;
+        }
+    }
+    else if(strcmp(p, "TAKE") == 0)
+    {
+        cout << "This command is not implemented";
+    }
+    else if(strcmp(p, "FIGHT") == 0)
+    {
+        cout << "This command is not implemented";
+    }
+    else if(strcmp(p, "QUIT") == 0)
+    {
+        return false;
+    }
+    else
+    {
+        cout << "Invalid command" << endl;
+        return false;
+    }
+    return false;
+}
+

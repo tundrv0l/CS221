@@ -50,4 +50,6 @@ public:
 
     // ** GameGraph Functions ** //
     void PrintAll(); // Prints all GameGraph data members to console, includes the items they are holding
+
+    bool dfs(int currentRoom, int destRoom); // Moves the player to the next room
 };
