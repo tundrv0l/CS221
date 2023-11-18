@@ -142,22 +142,6 @@ A function that executes a command from the user.
 
     char p[10]; // Char pointer to store the command
     char direction[6]; // Char Array to store the direction
-    /*int roomIdx;
-    int linkIdx;
-    int done;*/
-
-
-    // todo: debug
-
-    cout << "\033[1;34m" << "Current Location: " << "\033[0m" << m_iLocation << endl << endl;
-    for (int row = 0; row < NUMOFROOMS; row++) {
-        for (int col = 0; col < NUMOFROOMS; col++) {
-            cout << m_cAdjMatrix[row][col] << " ";
-        }
-        cout << endl;
-    }
-
-    // end of debug
 
     sscanf(command, "%s", p);
 
@@ -168,22 +152,21 @@ A function that executes a command from the user.
         if(strcmp(direction, "N") == 0 || strcmp(direction, "NORTH") == 0)
         {
             for (int i = 0; i < NUMOFROOMS; i++) {
-                if (m_cAdjMatrix[m_iLocation][i] == 'N') 
+                if (m_cAdjMatrix[m_iLocation][i] == 'N') // if the character at the location is 'N'
                 {
-                    m_iLocation = i;
+                    m_iLocation = i; // set the location to the index of the room
                     describeRoom(m_iLocation);
                     return false;
                 }
             }
 
-            // if the for loop completely executed and never returned, that means 'N' was not found
             cout << "You cannot go that direction." << endl;
             return false;
         }
         else if (strcmp(direction, "S") == 0 || strcmp(direction, "SOUTH") == 0)
         {
             for (int i = 0; i < NUMOFROOMS; i++) {
-                if (m_cAdjMatrix[m_iLocation][i] == 'S') 
+                if (m_cAdjMatrix[m_iLocation][i] == 'S') // if the character at the location is 'S'
                 {
                     m_iLocation = i;
                     describeRoom(m_iLocation);
@@ -198,7 +181,7 @@ A function that executes a command from the user.
         else if (strcmp(direction, "E") == 0 || strcmp(direction, "EAST") == 0)
         {
             for (int i = 0; i < NUMOFROOMS; i++) {
-                if (m_cAdjMatrix[m_iLocation][i] == 'E') 
+                if (m_cAdjMatrix[m_iLocation][i] == 'E')  // if the character at the location is 'E'
                 {
                     m_iLocation = i;
                     describeRoom(m_iLocation);
@@ -213,7 +196,7 @@ A function that executes a command from the user.
         else if (strcmp(direction, "W") == 0 || strcmp(direction, "WEST") == 0)
         {
             for (int i = 0; i < NUMOFROOMS; i++) {
-                if (m_cAdjMatrix[m_iLocation][i] == 'W') 
+                if (m_cAdjMatrix[m_iLocation][i] == 'W') // if the character at the location is 'W'
                 {
                     m_iLocation = i;
                     describeRoom(m_iLocation);
@@ -228,7 +211,7 @@ A function that executes a command from the user.
         else if (strcmp(direction, "U") == 0 || strcmp(direction, "UP") == 0)
         {
             for (int i = 0; i < NUMOFROOMS; i++) {
-                if (m_cAdjMatrix[m_iLocation][i] == 'U') 
+                if (m_cAdjMatrix[m_iLocation][i] == 'U') // if the character at the location is 'U'
                 {
                     m_iLocation = i;
                     describeRoom(m_iLocation);
@@ -243,7 +226,7 @@ A function that executes a command from the user.
         else if (strcmp(direction, "D") == 0 || strcmp(direction, "DOWN") == 0)
         {
             for (int i = 0; i < NUMOFROOMS; i++) {
-                if (m_cAdjMatrix[m_iLocation][i] == 'D') 
+                if (m_cAdjMatrix[m_iLocation][i] == 'D') // if the character at the location is 'D'
                 {
                     m_iLocation = i;
                     describeRoom(m_iLocation);
@@ -282,6 +265,25 @@ A function that executes a command from the user.
     return false;
 }
 
+
+void GameGraph::PrintAll()
+/*
+A function that prints all GameGraph data members to console, including rooms.
+*/
+{
+    for (int i = 0; i < NUMOFROOMS; i++) {
+        cout << "Room Name: " << m_Rms[i].m_sRoomName << endl;
+        cout << "Room Description: " << m_Rms[i].m_sRoomDesc << endl;
+        cout << "Room Item: " << m_Rms[i].m_sItemName << endl;
+        cout << "Room Creature: " << m_Rms[i].m_sCreatureName << endl;
+        for (int j = 0; j < NUMOFROOMS; j++) {
+            if (m_cAdjMatrix[i][j] != ' ') {
+                cout << "Link to room " << j << " in direction " << m_cAdjMatrix[i][j] << endl;
+            }
+        }
+        cout << endl;
+    }
+}
 
 
 // ** Private Functions ** //
@@ -352,28 +354,8 @@ A function that describes a room.
 {
     cout << m_Rms[roomIdx].m_sRoomName << endl;
     cout << m_Rms[roomIdx].m_sRoomDesc << endl;
-    cout << roomIdx << endl;
-   // cout << "You see a " << m_Rms[roomIdx].m_sItemName << " here." << endl;
-    //cout << "You see a " << m_Rms[roomIdx].m_sCreatureName << " here." << endl;
-}
-
-void GameGraph::PrintAll()
-/*
-A function that prints all GameGraph data members to console, includes the items they are holding.
-*/
-{
-    for (int i = 0; i < NUMOFROOMS; i++) {
-        cout << "Room Name: " << m_Rms[i].m_sRoomName << endl;
-        cout << "Room Description: " << m_Rms[i].m_sRoomDesc << endl;
-        cout << "Room Item: " << m_Rms[i].m_sItemName << endl;
-        cout << "Room Creature: " << m_Rms[i].m_sCreatureName << endl;
-        for (int j = 0; j < NUMOFROOMS; j++) {
-            if (m_cAdjMatrix[i][j] != ' ') {
-                cout << "Link to room " << j << " in direction " << m_cAdjMatrix[i][j] << endl;
-            }
-        }
-        cout << endl;
-    }
+    cout << "You see a " << m_Rms[roomIdx].m_sItemName << " here." << endl;
+    cout << "You see a " << m_Rms[roomIdx].m_sCreatureName << " here." << endl;
 }
 
 
