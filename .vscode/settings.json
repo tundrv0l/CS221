@@ -1,0 +1,9 @@
+{
+    "cmake.configureOnOpen": false,
+    "makefile.makefilePath": "C:\\Users\\pclark\\Desktop\\CS221\\Project1\\makefile",
+    "files.associations": {
+        "makefile": "cpp",
+        "iostream": "cpp",
+        "ostream": "cpp"
+    }
+}
